@@ -61,4 +61,10 @@ describe('TodosService', () => {
     mockTodoModel.find.mockResolvedValue(todos);
     void expect(service.findAll()).resolves.toEqual(todos);
   });
+
+  it('should find a todo by id', () => {
+    const todo = { _id: '1', title: 'Test Todo' };
+    mockTodoModel.findOne.mockResolvedValue(todo);
+    void expect(service.findOne('1')).resolves.toEqual(todo);
+  });
 });
