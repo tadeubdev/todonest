@@ -67,4 +67,13 @@ describe('TodosService', () => {
     mockTodoModel.findOne.mockResolvedValue(todo);
     void expect(service.findOne('1')).resolves.toEqual(todo);
   });
+
+  it('should update a todo', () => {
+    const updateTodoDto = { title: 'Updated Todo' };
+    const updatedTodo = { _id: '1', ...updateTodoDto };
+    mockTodoModel.findOneAndUpdate.mockResolvedValue(updatedTodo);
+    void expect(service.update('1', updateTodoDto)).resolves.toEqual(
+      updatedTodo,
+    );
+  });
 });
