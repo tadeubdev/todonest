@@ -61,4 +61,13 @@ describe('TodosController', () => {
     mockTodosService.findOne.mockResolvedValue(todo);
     void expect(controller.findOne('1')).resolves.toEqual(todo);
   });
+
+  it('should update a todo', () => {
+    const updateTodoDto = { title: 'Updated Todo' };
+    const updatedTodo = { id: '1', ...updateTodoDto };
+    mockTodosService.update.mockResolvedValue(updatedTodo);
+    void expect(controller.update('1', updateTodoDto)).resolves.toEqual(
+      updatedTodo,
+    );
+  });
 });
