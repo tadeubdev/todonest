@@ -1,0 +1,31 @@
+@URL=http://localhost:3000
+
+GET {{URL}}/api/todos
+
+###
+
+POST {{URL}}/api/todos
+Content-Type: application/json
+
+{
+  "title": "New Todo",
+  "description": "This is a new todo item.",
+  "completed": false
+}
+
+###
+
+GET {{URL}}/api/todos/67ca33ecd4e9d2e4bdc268d9
+
+###
+
+PATCH {{URL}}/api/todos/67ca33ecd4e9d2e4bdc268d9
+Content-Type: application/json
+
+{
+  "completed": true
+}
+
+###
+
+DELETE {{URL}}/api/todos/67ca33ecd4e9d2e4bdc268d9
