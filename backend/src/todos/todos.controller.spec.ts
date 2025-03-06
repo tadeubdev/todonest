@@ -55,4 +55,10 @@ describe('TodosController', () => {
     mockTodosService.findAll.mockResolvedValue(todos);
     void expect(controller.findAll()).resolves.toEqual(todos);
   });
+
+  it('should find a todo by id', () => {
+    const todo = { id: '1', title: 'Test Todo' };
+    mockTodosService.findOne.mockResolvedValue(todo);
+    void expect(controller.findOne('1')).resolves.toEqual(todo);
+  });
 });
