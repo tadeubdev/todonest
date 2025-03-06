@@ -17,8 +17,8 @@ export class TodosService {
     return this.catModel.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} todo`;
+  findOne(_id: string) {
+    return this.catModel.findOne({ _id });
   }
 
   update(id: string, updateTodoDto: UpdateTodoDto) {
