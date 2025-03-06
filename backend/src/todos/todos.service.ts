@@ -21,8 +21,12 @@ export class TodosService {
     return this.catModel.findOne({ _id });
   }
 
-  update(id: string, updateTodoDto: UpdateTodoDto) {
-    return `This action updates a #${id} todo`;
+  update(_id: string, updateTodoDto: UpdateTodoDto) {
+    return this.catModel.findOneAndUpdate(
+      { _id },
+      { $set: updateTodoDto },
+      { new: true },
+    );
   }
 
   remove(id: string) {
