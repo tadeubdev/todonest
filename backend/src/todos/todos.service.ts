@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpCode, Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -29,7 +29,8 @@ export class TodosService {
     );
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} todo`;
+  @HttpCode(204)
+  async remove(_id: string) {
+    await this.catModel.findOneAndDelete({ _id });
   }
 }
