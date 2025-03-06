@@ -76,4 +76,10 @@ describe('TodosService', () => {
       updatedTodo,
     );
   });
+
+  it('should remove a todo and remove http status code 204', () => {
+    const todoId = '1';
+    mockTodoModel.findOneAndDelete.mockResolvedValue(null);
+    void expect(service.remove(todoId)).resolves.toBeUndefined();
+  });
 });
