@@ -76,4 +76,14 @@ describe('TodosController', () => {
     mockTodosService.remove.mockResolvedValue(removedTodo);
     void expect(controller.remove('1')).resolves.toEqual(removedTodo);
   });
+
+  it('should handle errors', () => {
+    const errorMessage = 'Error occurred';
+    mockTodosService.create.mockRejectedValue(new Error(errorMessage));
+    void expect(
+      controller.create({
+        title: 'Test Todo',
+      }),
+    ).rejects.toThrow(errorMessage);
+  });
 });
