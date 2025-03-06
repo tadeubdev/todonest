@@ -14,7 +14,7 @@ export class TodosService {
   }
 
   findAll() {
-    return `This action returns all todos`;
+    return this.catModel.find();
   }
 
   findOne(id: string) {
