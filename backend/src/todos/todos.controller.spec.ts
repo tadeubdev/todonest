@@ -4,14 +4,29 @@ import { TodosService } from './todos.service';
 
 describe('TodosController', () => {
   let controller: TodosController;
+  let service: TodosService;
+
+  const mockTodosService = {
+    create: jest.fn(),
+    findAll: jest.fn(),
+    findOne: jest.fn(),
+    update: jest.fn(),
+    remove: jest.fn(),
+  };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TodosController],
-      providers: [TodosService],
+      providers: [
+        {
+          provide: TodosService,
+          useValue: mockTodosService,
+        },
+      ],
     }).compile();
 
     controller = module.get<TodosController>(TodosController);
+    service = module.get<TodosService>(TodosService);
   });
 
   it('should be defined', () => {
