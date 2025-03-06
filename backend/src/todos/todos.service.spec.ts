@@ -8,11 +8,19 @@ describe('TodosService', () => {
   let service: TodosService;
 
   const mockTodoModel = {
-    exists: jest.fn(),
-    create: jest.fn().mockReturnThis(),
+    create: jest.fn(),
     find: jest.fn().mockReturnThis(),
+    sort: jest.fn().mockReturnThis(),
     skip: jest.fn().mockReturnThis(),
-    limit: jest.fn().mockReturnValue([]),
+    limit: jest.fn().mockReturnThis(),
+    exec: jest.fn().mockResolvedValue([
+      {
+        _id: '1',
+        title: 'Test Todo 1',
+        description: 'Description 1',
+        completed: false,
+      },
+    ]),
     findOne: jest.fn(),
     findOneAndUpdate: jest.fn(),
     findOneAndDelete: jest.fn(),
@@ -48,18 +56,30 @@ describe('TodosService', () => {
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    mockTodoModel.exists.mockResolvedValue(false);
     mockTodoModel.create.mockResolvedValue(createdTodo);
     void expect(service.create(createTodoDto)).resolves.toEqual(createdTodo);
   });
 
-  it('should find all todos', () => {
-    const todos = [
-      { _id: '1', title: 'Test Todo 1' },
-      { _id: '2', title: 'Test Todo 2' },
-    ];
-    mockTodoModel.find.mockResolvedValue(todos);
-    void expect(service.findAll()).resolves.toEqual(todos);
+  it('should find all todos with pagination', async () => {
+    const page = 1;
+    const limit = 5;
+
+    const result = await service.findAll(page, limit);
+
+    expect(mockTodoModel.find).toHaveBeenCalled();
+    expect(mockTodoModel.sort).toHaveBeenCalledWith({ createdAt: -1 });
+    expect(mockTodoModel.skip).toHaveBeenCalledWith(0);
+    expect(mockTodoModel.limit).toHaveBeenCalledWith(5);
+    expect(mockTodoModel.exec).toHaveBeenCalled();
+
+    expect(result).toEqual([
+      {
+        _id: '1',
+        title: 'Test Todo 1',
+        description: 'Description 1',
+        completed: false,
+      },
+    ]);
   });
 
   it('should find a todo by id', () => {
