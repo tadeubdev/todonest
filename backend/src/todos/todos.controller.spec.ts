@@ -70,4 +70,10 @@ describe('TodosController', () => {
       updatedTodo,
     );
   });
+
+  it('should remove a todo', () => {
+    const removedTodo = { id: '1' };
+    mockTodosService.remove.mockResolvedValue(removedTodo);
+    void expect(controller.remove('1')).resolves.toEqual(removedTodo);
+  });
 });
