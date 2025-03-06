@@ -32,4 +32,18 @@ describe('TodosController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
+
+  it('should create a todo', () => {
+    const createTodoDto = {
+      title: 'Test Todo',
+      description: 'Test Description',
+      completed: false,
+    };
+    const createdTodo = {
+      id: '1',
+      ...createTodoDto,
+    };
+    mockTodosService.create.mockResolvedValue(createdTodo);
+    void expect(controller.create(createTodoDto)).resolves.toEqual(createdTodo);
+  });
 });
