@@ -9,8 +9,8 @@ import { Model } from 'mongoose';
 export class TodosService {
   constructor(@InjectModel(Todo.name) private catModel: Model<Todo>) {}
 
-  create(createTodoDto: CreateTodoDto) {
-    return 'This action adds a new todo';
+  async create(createTodoDto: CreateTodoDto) {
+    return await this.catModel.create(createTodoDto);
   }
 
   findAll() {
