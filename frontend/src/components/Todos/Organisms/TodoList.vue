@@ -27,7 +27,9 @@ watch(() => props.todos, (newTodos) => {
 </script>
 
 <template>
-  <div class="w-full">
+  <div
+    class="w-full overflow-y-scroll h-full flex flex-col"
+  >
     <TodoItem
       v-for="todo in todos"
       :key="`todo-${todo.id}`"
