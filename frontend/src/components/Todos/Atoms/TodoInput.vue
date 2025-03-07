@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue';
 
 const props = defineProps({
-  text: {
+  modelValue: {
     type: String,
     default: '',
   },
@@ -12,15 +12,20 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(['modelValue']);
-const text = ref(props.text);
+const emits = defineEmits(['modelValue', 'on:submit']);
+const text = ref(props.modelValue);
+
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   text.value = target.value;
   emits('modelValue', text.value);
 };
 
-watch(() => props.text, (newValue) => {
+const onSubmit = () => {
+  emits('on:submit', text.value);
+};
+
+watch(() => props.modelValue, (newValue) => {
   text.value = newValue;
 }, { immediate: true });
 </script>
@@ -31,6 +36,7 @@ watch(() => props.text, (newValue) => {
     :value="text"
     @input="handleInput"
     :placeholder="placeholder"
+    @keyup.enter="onSubmit"
     class="w-full py-2 px-3 border-1 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
   />
 </template>
