@@ -15,14 +15,15 @@ export class TodosService {
     return new TodoPresenter(model);
   }
 
-  findAll(page = 1, limit = 10) {
+  async findAll(page = 1, limit = 10) {
     const skip = (page - 1) * limit;
-    return this.todoModel
+    const models = await this.todoModel
       .find()
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
       .exec();
+    return models.map((model) => new TodoPresenter(model));
   }
 
   findOne(_id: string) {
