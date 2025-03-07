@@ -6,6 +6,14 @@ import TodoButton from '../Atoms/TodoButton.vue';
 const emits = defineEmits(['addTodo']);
 
 const text = ref('');
+
+const addTodo = () => {
+  if (text.value.trim() === '') {
+    return;
+  }
+  emits('addTodo', text.value);
+  text.value = '';
+};
 </script>
 
 <template>
@@ -13,9 +21,13 @@ const text = ref('');
     class="border-t-1 border-blue-300 flex gap-4 items-center justify-between p-4 md:px-8 bg-white rounded-b-lg"
   >
     <TodoInput
+      v-model="text"
+      @model-value="text = $event"
+      @on:submit="addTodo"
       placeholder="Adicione uma nova tarefa..."
     />
     <TodoButton
+      @on:click="addTodo"
       class="p-3 rounded-lg bg-blue-600 border-0 focus:outline-none text-white cursor-pointer hover:bg-blue-700"
     >
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
