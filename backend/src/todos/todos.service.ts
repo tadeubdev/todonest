@@ -34,8 +34,9 @@ export class TodosService {
     return new TodoPresenter(model);
   }
 
-  update(_id: string, updateTodoDto: UpdateTodoDto) {
-    return this.todoModel.findOneAndUpdate(
+  @HttpCode(204)
+  async update(_id: string, updateTodoDto: UpdateTodoDto) {
+    await this.todoModel.findOneAndUpdate(
       { _id },
       { $set: updateTodoDto },
       { new: true },
