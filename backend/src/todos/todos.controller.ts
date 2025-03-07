@@ -6,6 +6,9 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
@@ -21,8 +24,21 @@ export class TodosController {
   }
 
   @Get()
-  findAll() {
-    return this.todosService.findAll();
+  findAll(@Query('page') page = '1', @Query('limit') limit = '10') {
+    let pageNumber = 1;
+    let limitNumber = 10;
+    // check if page and limit are filled, if true, check if page and limit are valid numbers
+    if (page && limit) {
+      pageNumber = parseInt(page, 10);
+      limitNumber = parseInt(limit, 10);
+      if (isNaN(pageNumber) || isNaN(limitNumber)) {
+        throw new HttpException(
+          'Invalid page or limit',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+    return this.todosService.findAll(pageNumber, limitNumber);
   }
 
   @Get(':id')
