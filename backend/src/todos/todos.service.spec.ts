@@ -85,6 +85,12 @@ describe('TodosService', () => {
     expect(mockTodoModel.findOne).toHaveBeenCalledWith({ _id: '1' });
   });
 
+  it('should throw an error if todo not found', () => {
+    mockTodoModel.findOne.mockResolvedValue(null);
+    void expect(service.findOne('1')).rejects.toThrow('Todo not found');
+    expect(mockTodoModel.findOne).toHaveBeenCalledWith({ _id: '1' });
+  });
+
   it('should update a todo', () => {
     const updateTodoDto = { title: 'Updated Todo' };
     const updatedTodo = { _id: '1', ...updateTodoDto };
