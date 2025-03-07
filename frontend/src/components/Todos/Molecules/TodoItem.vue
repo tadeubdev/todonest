@@ -54,7 +54,7 @@ watch(() => todo.value, (newValue) => {
       @change="toggleTodo"
     />
     <div
-      class="w-full"
+      class="w-full max-w-2xl"
       :class="[
         todo.loading ? 'opacity-50' : '',
       ]"
