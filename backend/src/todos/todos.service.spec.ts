@@ -91,12 +91,15 @@ describe('TodosService', () => {
     expect(mockTodoModel.findOne).toHaveBeenCalledWith({ _id: '1' });
   });
 
-  it('should update a todo', () => {
+  it('should update a todo and return http status code 204 - no content', () => {
     const updateTodoDto = { title: 'Updated Todo' };
     const updatedTodo = { _id: '1', ...updateTodoDto };
     mockTodoModel.findOneAndUpdate.mockResolvedValue(updatedTodo);
-    void expect(service.update('1', updateTodoDto)).resolves.toEqual(
-      updatedTodo,
+    void expect(service.update('1', updateTodoDto)).resolves.toBeUndefined();
+    expect(mockTodoModel.findOneAndUpdate).toHaveBeenCalledWith(
+      { _id: '1' },
+      { $set: updateTodoDto },
+      { new: true },
     );
   });
 
