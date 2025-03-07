@@ -12,17 +12,11 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(['modelValue']);
+const emits = defineEmits(['click']);
 const text = ref(props.text);
 const buttonClass = ref(
   props.class || 'w-full py-2 px-3 border-1 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent'
 );
-
-const handleInput = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  text.value = target.value;
-  emits('modelValue', text.value);
-};
 
 watch(() => props.text, (newValue) => {
   text.value = newValue;
@@ -33,8 +27,8 @@ watch(() => props.text, (newValue) => {
   <button
     type="button"
     :value="text"
-    @input="handleInput"
     :class="buttonClass"
+    @click="$emit('click', $event)"
   >
     <slot />
   </button>
