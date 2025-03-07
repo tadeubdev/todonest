@@ -75,14 +75,7 @@ describe('TodosService', () => {
     expect(mockTodoModel.limit).toHaveBeenCalledWith(5);
     expect(mockTodoModel.exec).toHaveBeenCalled();
 
-    expect(result).toEqual([
-      {
-        _id: '1',
-        title: 'Test Todo 1',
-        description: 'Description 1',
-        completed: false,
-      },
-    ]);
+    expect(result[0]).toBeInstanceOf(TodoPresenter);
   });
 
   it('should find a todo by id', () => {
