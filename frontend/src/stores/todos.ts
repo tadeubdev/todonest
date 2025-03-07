@@ -63,7 +63,7 @@ export const useTodosStore = defineStore('todos', {
             reject(error);
           })
           .finally(() => {
-            this.loading = false;
+            this.todos[todoIndex].loading = false;
           });
       });
     },
