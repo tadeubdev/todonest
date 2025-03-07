@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import TodoItem from '../Molecules/TodoItem.vue';
+import type { TodoItemEnum } from '../../../enums/Todos/TodoItemEnum';
 
 const props = defineProps({
   todos: {
-    type: Array,
+    type: Array as () => Array<TodoItemEnum>,
+    default: () => [],
     required: true,
   },
 });
@@ -13,17 +15,17 @@ const todos = ref(props.todos);
 
 const emits = defineEmits(['removeTodo', 'toggleTodo']);
 
-const removeTodo = (id: number) => {
+const removeTodo = (id: string) => {
   emits('removeTodo', id);
 };
 
-const toggleTodo = (id: number) => {
+const toggleTodo = (id: string) => {
   emits('toggleTodo', id);
 };
 
 watch(() => props.todos, (newTodos) => {
   todos.value = newTodos;
-}, { immediate: true });
+}, { immediate: true, deep: true });
 </script>
 
 <template>
@@ -34,8 +36,8 @@ watch(() => props.todos, (newTodos) => {
       v-for="todo in todos"
       :key="`todo-${todo.id}`"
       :todo="todo"
-      @removeTodo="removeTodo(todo.id)"
-      @toggleTodo="toggleTodo(todo.id)"
+      @removeTodo="removeTodo"
+      @toggleTodo="toggleTodo"
     />
   </div>
 </template>
