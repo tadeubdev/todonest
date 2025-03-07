@@ -1,10 +1,9 @@
 <script setup lang="ts">
+import TodoTemplate from './components/Todos/Templates/TodoTemplate.vue';
 </script>
 
 <template>
-  <div>
-    Hello!
-  </div>
+  <TodoTemplate />
 </template>
 
 <style scoped>
