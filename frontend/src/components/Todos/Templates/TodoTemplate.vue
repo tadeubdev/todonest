@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, type Ref } from 'vue';
+import { onMounted, type Ref } from 'vue';
 import TodoContainer from '../Organisms/TodoContainer.vue';
 import TodoList from '../Organisms/TodoList.vue';
 import TodoFooter from '../Organisms/TodoFooter.vue';
