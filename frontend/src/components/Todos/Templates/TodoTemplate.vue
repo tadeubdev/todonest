@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import TodoContainer from '../Organisms/TodoContainer.vue';
 import TodoList from '../Organisms/TodoList.vue';
+import TodoFooter from '../Organisms/TodoFooter.vue';
 
 const todos = ref([
   { id: 1, title: 'Tarefa 1', description: 'Descrição da tarefa 1', completed: false },
@@ -35,6 +36,8 @@ const toggleTodo = (id: number) => {
         :todos="todos"
         @removeTodo="removeTodo"
         @toggleTodo="toggleTodo"
+      />
+      <TodoFooter
       />
     </TodoContainer>
   </div>
