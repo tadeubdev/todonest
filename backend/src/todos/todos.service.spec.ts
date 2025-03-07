@@ -81,7 +81,8 @@ describe('TodosService', () => {
   it('should find a todo by id', () => {
     const todo = { _id: '1', title: 'Test Todo' };
     mockTodoModel.findOne.mockResolvedValue(todo);
-    void expect(service.findOne('1')).resolves.toEqual(todo);
+    void expect(service.findOne('1')).resolves.toBeInstanceOf(TodoPresenter);
+    expect(mockTodoModel.findOne).toHaveBeenCalledWith({ _id: '1' });
   });
 
   it('should update a todo', () => {
