@@ -20,14 +20,27 @@ const todos: Ref<TodoItemEnum[]> = ref([
 ]);
 
 const removeTodo = (id: string) => {
-  todos.value = todos.value.filter(todo => todo.id !== id);
+  const todoIndex = todos.value.findIndex(todo => todo.id === id);
+  if (todoIndex === -1) {
+    return;
+  }
+  todos.value[todoIndex].loading = true;
+  setTimeout(() => {
+    todos.value[todoIndex].loading = false;
+    todos.value = todos.value.filter(todo => todo.id !== id);
+  }, 1000);
 };
 
 const toggleTodo = (id: string) => {
   const todoIndex = todos.value.findIndex(todo => todo.id === id);
-  if (todoIndex !== -1) {
-    todos.value[todoIndex].completed = !todos.value[todoIndex].completed;
+  if (todoIndex === -1) {
+    return;
   }
+  todos.value[todoIndex].loading = true;
+  setTimeout(() => {
+    todos.value[todoIndex].loading = false;
+    todos.value[todoIndex].completed = !todos.value[todoIndex].completed;
+  }, 1000);
 };
 </script>
 
