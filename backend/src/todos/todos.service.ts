@@ -26,8 +26,9 @@ export class TodosService {
     return models.map((model) => new TodoPresenter(model));
   }
 
-  findOne(_id: string) {
-    return this.todoModel.findOne({ _id });
+  async findOne(_id: string) {
+    const model = await this.todoModel.findOne({ _id });
+    return new TodoPresenter(model);
   }
 
   update(_id: string, updateTodoDto: UpdateTodoDto) {
