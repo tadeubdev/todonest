@@ -3,6 +3,7 @@ import { TodosService } from './todos.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { Todo } from './schemas/todo.schema';
 import { CreateTodoDto } from './dto/create-todo.dto';
+import { TodoPresenter } from './presenters/todo-presenter';
 
 describe('TodosService', () => {
   let service: TodosService;
@@ -51,13 +52,15 @@ describe('TodosService', () => {
       completed: false,
     };
     const createdTodo = {
-      _id: '1',
+      id: '1',
       ...createTodoDto,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
     mockTodoModel.create.mockResolvedValue(createdTodo);
-    void expect(service.create(createTodoDto)).resolves.toEqual(createdTodo);
+    void expect(service.create(createTodoDto)).resolves.toBeInstanceOf(
+      TodoPresenter,
+    );
   });
 
   it('should find all todos with pagination', async () => {

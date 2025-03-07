@@ -4,13 +4,15 @@ import { UpdateTodoDto } from './dto/update-todo.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Todo } from './schemas/todo.schema';
 import { Model } from 'mongoose';
+import { TodoPresenter } from './presenters/todo-presenter';
 
 @Injectable()
 export class TodosService {
   constructor(@InjectModel(Todo.name) private todoModel: Model<Todo>) {}
 
   async create(createTodoDto: CreateTodoDto) {
-    return await this.todoModel.create(createTodoDto);
+    const model = await this.todoModel.create(createTodoDto);
+    return new TodoPresenter(model);
   }
 
   findAll(page = 1, limit = 10) {

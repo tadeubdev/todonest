@@ -1,19 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 export class TodoPresenter {
-  static toResponse(
-    todo: {
-      _id: string;
-      title: string;
-      description: string;
-      completed: boolean;
-      __v: number;
-    } | null,
-  ) {
-    if (!todo) return null;
+  constructor(private readonly todo: any) {}
+
+  toResponse() {
+    if (!this.todo) return null;
     return {
-      id: todo._id,
-      title: todo.title,
-      description: todo.description,
-      completed: todo.completed,
+      id: this.todo._id,
+      title: this.todo.title,
+      description: this.todo.description,
+      completed: this.todo.completed,
+      createdAt: this.todo.createdAt,
+      updatedAt: this.todo.updatedAt,
     };
   }
 }
