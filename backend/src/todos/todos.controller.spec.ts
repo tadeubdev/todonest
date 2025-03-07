@@ -47,13 +47,32 @@ describe('TodosController', () => {
     void expect(controller.create(createTodoDto)).resolves.toEqual(createdTodo);
   });
 
-  it('should find all todos', () => {
+  it('should find all todos with pagination', () => {
+    const page = '1';
+    const limit = '10';
+    const todos = [
+      { id: '1', title: 'Test Todo 1' },
+      { id: '2', title: 'Test Todo 2' },
+    ];
+    mockTodosService.findAll.mockResolvedValue(todos);
+    void expect(controller.findAll(page, limit)).resolves.toEqual(todos);
+  });
+
+  it('should find all todos without pagination', () => {
     const todos = [
       { id: '1', title: 'Test Todo 1' },
       { id: '2', title: 'Test Todo 2' },
     ];
     mockTodosService.findAll.mockResolvedValue(todos);
     void expect(controller.findAll()).resolves.toEqual(todos);
+  });
+
+  it('should throw an error if page or limit is not a valid number', () => {
+    const invalidPage = 'invalid';
+    const invalidLimit = 'invalid';
+    void expect(() => controller.findAll(invalidPage, invalidLimit)).toThrow(
+      'Invalid page or limit',
+    );
   });
 
   it('should find a todo by id', () => {
