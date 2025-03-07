@@ -18,6 +18,20 @@ export const fetchTodosService = async () => {
   });
 };
 
+export const addTodoService = async (todo: { title: string; description: string }) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const newTodo = {
+        id: Math.random().toString(36).substr(2, 9),
+        ...todo,
+        completed: false,
+        loading: false,
+      };
+      resolve(newTodo);
+    }, 500);
+  });
+};
+
 export const removeTodoService = async (id: string) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {

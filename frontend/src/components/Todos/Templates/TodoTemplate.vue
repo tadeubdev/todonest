@@ -11,7 +11,7 @@ import TodoLoadingList from '../Organisms/TodoLoadingList.vue';
 
 const todosStore = useTodosStore();
 const { loading, todos }: { loading: Ref<boolean>, todos: Ref<TodoItemEnum[]> } = storeToRefs(todosStore);
-const { fetchTodosList, removeTodo, toggleTodo } = todosStore;
+const { fetchTodosList, removeTodo, toggleTodo, addTodo } = todosStore;
 
 onMounted(() => {
   fetchTodosList();
@@ -41,6 +41,7 @@ onMounted(() => {
         @toggleTodo="toggleTodo"
       />
       <TodoFooter
+        @addTodo="addTodo"
         v-if="!loading"
       />
     </TodoContainer>

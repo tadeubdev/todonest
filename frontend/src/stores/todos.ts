@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import type { TodoItemEnum } from "../enums/Todos/TodoItemEnum";
-import { fetchTodosService, removeTodoService, toggleTodoService } from "../services/Todo/todo-services";
+import { addTodoService, fetchTodosService, removeTodoService, toggleTodoService } from "../services/Todo/todo-services";
 
 export const useTodosStore = defineStore('todos', {
   state: () => ({
@@ -26,6 +26,25 @@ export const useTodosStore = defineStore('todos', {
         .finally(() => {
           this.loading = false;
         });
+    },
+    addTodo(text: string) {
+      return new Promise((resolve, reject) => {
+        const newTodo = {
+          title: text,
+          description: '',
+        };
+        addTodoService(newTodo)
+          .then((data: any) => {
+            this.todos.unshift({
+              ...data,
+              loading: false,
+            });
+            resolve(true);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+      });
     },
     removeTodo(id: string) {
       return new Promise((resolve, reject) => {
