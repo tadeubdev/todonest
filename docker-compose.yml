@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   mongo:
     image: mongo:latest
     container_name: mongodb
@@ -14,6 +15,30 @@ services:
     volumes:
       - mongo-data:/data/db
     command: mongod --auth
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nest-backend
+    restart: unless-stopped
+    environment:
+      - MONGO_URI=mongodb://admin:password@mongo:27017/todonest?authSource=admin
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vue-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
 
 volumes:
   mongo-data:
