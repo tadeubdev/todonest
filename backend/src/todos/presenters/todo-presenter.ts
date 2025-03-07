@@ -8,10 +8,10 @@ export class TodoPresenter {
     return {
       id: this.todo._id,
       title: this.todo.title,
-      description: this.todo.description,
-      completed: this.todo.completed,
-      createdAt: this.todo.createdAt,
-      updatedAt: this.todo.updatedAt,
+      description: this.todo.description || null,
+      completed: this.todo.completed || false,
+      createdAt: this.todo.createdAt || null,
+      updatedAt: this.todo.updatedAt || null,
     };
   }
 }
