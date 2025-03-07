@@ -13,14 +13,17 @@ import {
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
+import { TodoPresenter } from './presenters/todo-presenter';
 
 @Controller('todos')
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 
   @Post()
-  create(@Body() createTodoDto: CreateTodoDto) {
-    return this.todosService.create(createTodoDto);
+  async create(@Body() createTodoDto: CreateTodoDto) {
+    const presenter: TodoPresenter =
+      await this.todosService.create(createTodoDto);
+    return presenter.toResponse();
   }
 
   @Get()
@@ -38,12 +41,19 @@ export class TodosController {
         );
       }
     }
-    return this.todosService.findAll(pageNumber, limitNumber);
+    return this.todosService.findAll(pageNumber, limitNumber).then((todos) => {
+      return todos.map((todo) => todo.toResponse());
+    });
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.todosService.findOne(id);
+    return this.todosService.findOne(id).then((todo) => {
+      if (!todo) {
+        throw new HttpException('Todo not found', HttpStatus.NOT_FOUND);
+      }
+      return todo.toResponse();
+    });
   }
 
   @Patch(':id')
