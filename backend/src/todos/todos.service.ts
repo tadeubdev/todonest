@@ -28,6 +28,9 @@ export class TodosService {
 
   async findOne(_id: string) {
     const model = await this.todoModel.findOne({ _id });
+    if (!model) {
+      throw new Error('Todo not found');
+    }
     return new TodoPresenter(model);
   }
 
