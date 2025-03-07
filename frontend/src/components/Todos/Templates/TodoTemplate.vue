@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import TodoContainer from '../Organisms/TodoContainer.vue';
 import TodoList from '../Organisms/TodoList.vue';
 import TodoFooter from '../Organisms/TodoFooter.vue';
+import TodoEmptyList from '../Organisms/TodoEmptyList.vue';
 
 const todos = ref([
   { id: 1, title: 'Tarefa 1', description: 'Descrição da tarefa 1', completed: false },
@@ -39,7 +40,11 @@ const toggleTodo = (id: number) => {
     </div>
 
     <TodoContainer>
+      <TodoEmptyList
+        v-if="todos.length === 0"
+      />
       <TodoList
+        v-else
         :todos="todos"
         @removeTodo="removeTodo"
         @toggleTodo="toggleTodo"
