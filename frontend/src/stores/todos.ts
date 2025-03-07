@@ -73,9 +73,10 @@ export const useTodosStore = defineStore('todos', {
           return reject(new Error('Todo not found'));
         }
         this.todos[todoIndex].loading = true;
-        toggleTodoService(id)
+        const completed = !this.todos[todoIndex].completed;
+        toggleTodoService(id, completed)
           .then(() => {
-            this.todos[todoIndex].completed = !this.todos[todoIndex].completed;
+            this.todos[todoIndex].completed = completed;
             resolve(true);
           })
           .catch((error) => {
