@@ -6,16 +6,11 @@ This project is a simple CRUD application using NestJS, MongoDB and Vue 3. It al
 
 ### How to run the project
 1. Clone the repository
-2. Run mongodb docker container
+2. Run frontend, backend and mongodb with docker-compose
 ```bash
-docker-compose up -d --build
+docker-compose up
 ```
-3. Install backend dependencies
-```bash
-cd backend
-npm install
-```
-4. Run the backend server
-```bash
-npm run start:dev
-```
+3. Open your browser and go to `http://localhost:5173` to see the frontend
+4. Open your browser and go to `http://localhost:3000` to see the backend
+
+![Print](https://github.com/tadeubdev/todonest/blob/main/print/todo-screenshot.png?raw=true)
